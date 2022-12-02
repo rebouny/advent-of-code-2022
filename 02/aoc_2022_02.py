@@ -3,6 +3,10 @@
 
 """
 Solves second day of aoc 2022.
+
+Uses precalculated map of scores for both parts as the
+amount of possible values is limited.
+
 """
 
 from typing import Final
@@ -29,12 +33,12 @@ def load_input(filename: str):
 
 
 def part_01(games) -> int:
-    """Part 1"""
+    """Looks up first part of score tuple"""
     return reduce(operator.add, map(lambda x: SCORES[x][0], games))
 
 
 def part_02(games) -> int:
-    """Part 2"""
+    """Looks up second part of score tuple"""
     return reduce(operator.add, map(lambda x: SCORES[x][1], games))
 
 
