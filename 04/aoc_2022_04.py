@@ -7,7 +7,7 @@ Solves fourth day of aoc 2022.
 Treats elf assignment as set initialized from range.
 """
 
-from typing import Final
+from typing import Final, Tuple, List, Set
 from functools import reduce
 import operator
 
@@ -22,39 +22,39 @@ TEST_DATA: Final = [
 ]
 
 
-def split_elf(pair):
+def split_elf(pair: List[str]) -> Tuple[Tuple[int, int], Tuple[int, int]]:
     """Load helper: """
     return (tuple(map(int, pair[0].split('-'))),
             tuple(map(int, pair[1].split('-'))))
 
 
-def load_data(filename: str):
+def load_data(filename: str) -> List[Tuple[Tuple[int, int], Tuple[int, int]]]:
     """Loads input into list of tuples of tuples of ints"""
     with open(filename, 'rt', encoding='utf-8') as file:
         return list(map(split_elf, map(lambda x: x.rstrip().split(','), file.readlines())))
 
 
-def elf_set(elf):
+def elf_set(elf: Tuple[int, int]) -> Set[int]:
     """Returns elves assignment as a set of ints"""
     return set(range(elf[0], elf[1] + 1))
 
 
-def is_contained(left, right):
+def is_contained(left: Tuple[int, int], right: Tuple[int, int]) -> bool:
     """True if ones assignment is completely contained in the others"""
     return elf_set(left).issubset(elf_set(right)) or elf_set(right).issubset(elf_set(left))
 
 
-def overlaps(left, right) -> bool:
+def overlaps(left: Tuple[int, int], right: Tuple[int, int]) -> bool:
     """True is two elves assignments have something in common"""
     return len(elf_set(left).intersection(elf_set(right))) > 0
 
 
-def part_01(data) -> int:
+def part_01(data: List[Tuple[Tuple[int, int], Tuple[int, int]]]) -> int:
     """Sums up contained pairs of elves"""
     return reduce(operator.add, map(lambda x: is_contained(x[0], x[1]), data))
 
 
-def part_02(data) -> int:
+def part_02(data: List[Tuple[Tuple[int, int], Tuple[int, int]]]) -> int:
     """Sums up overlapping pairs of elves"""
     return reduce(operator.add, map(lambda x: overlaps(x[0], x[1]), data))
 
