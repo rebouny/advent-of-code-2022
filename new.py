@@ -90,7 +90,7 @@ def body(args: Args) -> str:
     today = str(date.today())
 
     return f"""#!/usr/bin/env python3
-    # -*- coding: utf-8 -*-
+# -*- coding: utf-8 -*-
 
 \"\"\"
 Author : {args.name}{' <' + args.email + '>' if args.email else ''}
